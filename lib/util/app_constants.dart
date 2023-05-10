@@ -2,7 +2,7 @@ import 'package:sixam_mart_store/data/model/response/language_model.dart';
 import 'package:sixam_mart_store/util/images.dart';
 
 class AppConstants {
-  static const String APP_NAME = 'Watan Store 2.0';
+  static const String APP_NAME = 'فوراً (متجر)';
   static const double APP_VERSION = 2.1;
 
   static const String BASE_URL = 'https://admin.watanmeet.online';

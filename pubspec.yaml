@@ -1,6 +1,6 @@
 name: sixam_mart_store
 description: An application for multivendor ecommerce restaurant.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -44,6 +44,7 @@ dependencies:
   flutter_pos_printer_platform: ^1.1.0
   esc_pos_utils: ^1.1.0
   screenshot: ^1.2.3
+  change_app_package_name: ^1.1.0
 
 dependency_overrides:
   modal_bottom_sheet:
@@ -73,4 +74,14 @@ flutter:
         - asset: assets/font/Roboto-Bold.ttf
           weight: 700
         - asset: assets/font/Roboto-Black.ttf
+          weight: 900
+    - family: Tajawal
+      fonts:
+        - asset: assets/font/Tajawal-Regular.ttf
+          weight: 400
+        - asset: assets/font/Tajawal-Medium.ttf
+          weight: 500
+        - asset: assets/font/Tajawal-Bold.ttf
+          weight: 700
+        - asset: assets/font/Tajawal-Black.ttf
           weight: 900
