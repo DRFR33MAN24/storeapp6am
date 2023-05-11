@@ -153,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       authController.vendorTypeIndex == 1 ? SizedBox() : TextButton(
                         onPressed: () => Get.toNamed(RouteHelper.getForgotPassRoute()),
-                        child: Text('${'forgot_password'.tr}?'),
+                        child: Text('${'forgot_password'.tr}'),
                       ),
                     ]),
                     SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_LARGE),

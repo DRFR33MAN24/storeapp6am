@@ -2,10 +2,10 @@ import 'package:sixam_mart_store/data/model/response/language_model.dart';
 import 'package:sixam_mart_store/util/images.dart';
 
 class AppConstants {
-  static const String APP_NAME = 'فوراً (متجر)';
+  static const String APP_NAME = 'فوراً (بائع)';
   static const double APP_VERSION = 2.1;
 
-  static const String BASE_URL = 'https://admin.watanmeet.online';
+  static const String BASE_URL = 'https://admin.fauoran.com';
   static const String CONFIG_URI = '/api/v1/config';
   static const String LOGIN_URI = '/api/v1/auth/vendor/login';
   static const String FORGET_PASSWORD_URI =
@@ -128,15 +128,16 @@ class AppConstants {
 
   static List<LanguageModel> languages = [
     LanguageModel(
-        imageUrl: Images.english,
-        languageName: 'English',
-        countryCode: 'US',
-        languageCode: 'en'),
-    LanguageModel(
         imageUrl: Images.arabic,
         languageName: 'Arabic',
         countryCode: 'SA',
         languageCode: 'ar'),
+    LanguageModel(
+        imageUrl: Images.english,
+        languageName: 'English',
+        countryCode: 'US',
+        languageCode: 'en'),
+
     LanguageModel(
         imageUrl: Images.arabic,
         languageName: 'Spanish',
