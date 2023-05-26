@@ -518,5 +518,8 @@
   "limit": "حد",
   "tax_included": "شامل الضريبة",
   "no_reasons_available": "لا توجد أسباب متاحة",
-  "rejected": "مرفوض"
+  "rejected": "مرفوض",
+  "reset_collected_cash": "جمع النقود من الموظف",
+  "do_you_want_to_reset_collected_cash": "هل تريد حقا جمع المردود اليومي من الموظف",
+  "money_collected_successfully": "تم تحصيل النقود بنجاح"
 }

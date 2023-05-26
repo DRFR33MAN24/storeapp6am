@@ -88,95 +88,118 @@ class RouteHelper {
   static String getInitialRoute() => '$initial';
   static String getSplashRoute(NotificationBody body) {
     String _data = 'null';
-    if(body != null) {
+    if (body != null) {
       List<int> _encoded = utf8.encode(jsonEncode(body.toJson()));
       _data = base64Encode(_encoded);
     }
     return '$splash?data=$_data';
   }
+
   static String getLanguageRoute(String page) => '$language?page=$page';
   static String getSignInRoute() => '$signIn';
-  static String getVerificationRoute(String email) => '$verification?email=$email';
+  static String getVerificationRoute(String email) =>
+      '$verification?email=$email';
   static String getMainRoute(String page) => '$main?page=$page';
   static String getForgotPassRoute() => '$forgotPassword';
-  static String getResetPasswordRoute(String phone, String token, String page) => '$resetPassword?phone=$phone&token=$token&page=$page';
-  static String getOrderDetailsRoute(int orderID, {bool fromNotification}) => '$orderDetails?id=$orderID&from=${fromNotification.toString()}';
+  static String getResetPasswordRoute(
+          String phone, String token, String page) =>
+      '$resetPassword?phone=$phone&token=$token&page=$page';
+  static String getOrderDetailsRoute(int orderID, {bool fromNotification}) =>
+      '$orderDetails?id=$orderID&from=${fromNotification.toString()}';
   static String getProfileRoute() => '$profile';
   static String getUpdateProfileRoute() => '$updateProfile';
-  static String getNotificationRoute({bool fromNotification}) => '$notification?from=${fromNotification.toString()}';
+  static String getNotificationRoute({bool fromNotification}) =>
+      '$notification?from=${fromNotification.toString()}';
   static String getBankInfoRoute() => '$bankInfo';
   static String getWalletRoute() => '$wallet';
   static String getWithdrawHistoryRoute() => '$withdrawHistory';
   static String getStoreRoute() => '$store';
   static String getCampaignRoute() => '$campaign';
   static String getCampaignDetailsRoute(int id) => '$campaignDetails?id=$id';
-  static String getUpdateRoute(bool isUpdate) => '$update?update=${isUpdate.toString()}';
+  static String getUpdateRoute(bool isUpdate) =>
+      '$update?update=${isUpdate.toString()}';
   static String getItemRoute(Item itemModel) {
-    if(itemModel == null) {
+    if (itemModel == null) {
       return '$item?data=null';
     }
     List<int> _encoded = utf8.encode(jsonEncode(itemModel.toJson()));
     String _data = base64Encode(_encoded);
     return '$item?data=$_data';
   }
-  static String getAddItemRoute(Item itemModel, List<Translation> translations) {
+
+  static String getAddItemRoute(
+      Item itemModel, List<Translation> translations) {
     String _translations = base64Encode(utf8.encode(jsonEncode(translations)));
-    if(itemModel == null) {
+    if (itemModel == null) {
       return '$addItem?data=null&translations=$_translations';
     }
     String _data = base64Encode(utf8.encode(jsonEncode(itemModel.toJson())));
     return '$addItem?data=$_data&translations=$_translations';
   }
+
   static String getCategoriesRoute() => '$categories';
   static String getSubCategoriesRoute(CategoryModel categoryModel) {
     List<int> _encoded = utf8.encode(jsonEncode(categoryModel.toJson()));
     String _data = base64Encode(_encoded);
     return '$subCategories?data=$_data';
   }
+
   static String getStoreSettingsRoute(Store store) {
     List<int> _encoded = utf8.encode(jsonEncode(store.toJson()));
     String _data = base64Encode(_encoded);
     return '$storeSettings?data=$_data';
   }
+
   static String getAddonsRoute() => '$addons';
   static String getItemDetailsRoute(Item itemModel) {
     List<int> _encoded = utf8.encode(jsonEncode(itemModel.toJson()));
     String _data = base64Encode(_encoded);
     return '$itemDetails?data=$_data';
   }
+
   static String getPosRoute() => '$pos';
   static String getDeliveryManRoute() => '$deliveryMan';
   static String getAddDeliveryManRoute(DeliveryManModel deliveryMan) {
-    if(deliveryMan == null) {
+    if (deliveryMan == null) {
       return '$addDeliveryMan?data=null';
     }
     List<int> _encoded = utf8.encode(jsonEncode(deliveryMan.toJson()));
     String _data = base64Encode(_encoded);
     return '$addDeliveryMan?data=$_data';
   }
-  static String getDeliveryManDetailsRoute(DeliveryManModel deliveryMan) {
+
+  static String getDeliveryManDetailsRoute(
+      DeliveryManModel deliveryMan, int index) {
     List<int> _encoded = utf8.encode(jsonEncode(deliveryMan.toJson()));
     String _data = base64Encode(_encoded);
-    return '$deliveryManDetails?data=$_data';
+    return '$deliveryManDetails?data=$_data&index=$index';
   }
+
   static String getTermsRoute() => '$terms';
   static String getPrivacyRoute() => '$privacy';
   static String getItemImagesRoute(Item item) {
     String _data = base64Url.encode(utf8.encode(jsonEncode(item.toJson())));
     return '$itemImages?item=$_data';
   }
-  static String getChatRoute({@required NotificationBody notificationBody, User user, int conversationId, bool fromNotification}) {
+
+  static String getChatRoute(
+      {@required NotificationBody notificationBody,
+      User user,
+      int conversationId,
+      bool fromNotification}) {
     String _notificationBody = 'null';
     String _user = 'null';
 
-    if(notificationBody != null) {
-      _notificationBody = base64Encode(utf8.encode(jsonEncode(notificationBody)));
+    if (notificationBody != null) {
+      _notificationBody =
+          base64Encode(utf8.encode(jsonEncode(notificationBody)));
     }
-    if(user != null) {
+    if (user != null) {
       _user = base64Encode(utf8.encode(jsonEncode(user.toJson())));
     }
     return '$chatScreen?notification_body=$_notificationBody&user=$_user&conversation_id=$conversationId&from=${fromNotification.toString()}';
   }
+
   static String getConversationListRoute() => '$conversationListScreen';
   static String getRestaurantRegistrationRoute() => '$restaurantRegistration';
   static String getCouponRoute() => '$coupon';
@@ -184,117 +207,196 @@ class RouteHelper {
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => DashboardScreen(pageIndex: 0)),
-    GetPage(name: splash, page: () {
-      NotificationBody _data;
-      if(Get.parameters['data'] != 'null') {
-        List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-        _data = NotificationBody.fromJson(jsonDecode(utf8.decode(_decode)));
-      }
-      return SplashScreen(body: _data);
-    }),
-    GetPage(name: language, page: () => LanguageScreen(fromMenu: Get.parameters['page'] == 'menu')),
+    GetPage(
+        name: splash,
+        page: () {
+          NotificationBody _data;
+          if (Get.parameters['data'] != 'null') {
+            List<int> _decode =
+                base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+            _data = NotificationBody.fromJson(jsonDecode(utf8.decode(_decode)));
+          }
+          return SplashScreen(body: _data);
+        }),
+    GetPage(
+        name: language,
+        page: () => LanguageScreen(fromMenu: Get.parameters['page'] == 'menu')),
     GetPage(name: signIn, page: () => SignInScreen()),
-    GetPage(name: verification, page: () => VerificationScreen(email: Get.parameters['email'])),
-    GetPage(name: main, page: () => DashboardScreen(
-      pageIndex: Get.parameters['page'] == 'home' ? 0 : Get.parameters['page'] == 'favourite' ? 1
-          : Get.parameters['page'] == 'cart' ? 2 : Get.parameters['page'] == 'order' ? 3 : Get.parameters['page'] == 'menu' ? 4 : 0,
-    )),
+    GetPage(
+        name: verification,
+        page: () => VerificationScreen(email: Get.parameters['email'])),
+    GetPage(
+        name: main,
+        page: () => DashboardScreen(
+              pageIndex: Get.parameters['page'] == 'home'
+                  ? 0
+                  : Get.parameters['page'] == 'favourite'
+                      ? 1
+                      : Get.parameters['page'] == 'cart'
+                          ? 2
+                          : Get.parameters['page'] == 'order'
+                              ? 3
+                              : Get.parameters['page'] == 'menu'
+                                  ? 4
+                                  : 0,
+            )),
     GetPage(name: forgotPassword, page: () => ForgetPassScreen()),
-    GetPage(name: resetPassword, page: () => NewPassScreen(
-      resetToken: Get.parameters['token'], email: Get.parameters['phone'], fromPasswordChange: Get.parameters['page'] == 'password-change',
-    )),
-    GetPage(name: orderDetails, page: () {
-      return Get.arguments != null ? Get.arguments : OrderDetailsScreen(
-        orderId: int.parse(Get.parameters['id']), isRunningOrder: false, fromNotification: Get.parameters['from'] == 'true',
-      );
-    }),
+    GetPage(
+        name: resetPassword,
+        page: () => NewPassScreen(
+              resetToken: Get.parameters['token'],
+              email: Get.parameters['phone'],
+              fromPasswordChange: Get.parameters['page'] == 'password-change',
+            )),
+    GetPage(
+        name: orderDetails,
+        page: () {
+          return Get.arguments != null
+              ? Get.arguments
+              : OrderDetailsScreen(
+                  orderId: int.parse(Get.parameters['id']),
+                  isRunningOrder: false,
+                  fromNotification: Get.parameters['from'] == 'true',
+                );
+        }),
     GetPage(name: profile, page: () => ProfileScreen()),
     GetPage(name: updateProfile, page: () => UpdateProfileScreen()),
-    GetPage(name: notification, page: () => NotificationScreen(fromNotification: Get.parameters['from'] == 'true')),
+    GetPage(
+        name: notification,
+        page: () => NotificationScreen(
+            fromNotification: Get.parameters['from'] == 'true')),
     GetPage(name: bankInfo, page: () => BankInfoScreen()),
     GetPage(name: wallet, page: () => WalletScreen()),
     GetPage(name: withdrawHistory, page: () => WithdrawHistoryScreen()),
     GetPage(name: store, page: () => StoreScreen()),
     GetPage(name: campaign, page: () => CampaignScreen()),
-    GetPage(name: campaignDetails, page: () {
-      return Get.arguments != null ? Get.arguments : CampaignDetailsScreen(
-        campaignModel: CampaignModel(id: int.parse(Get.parameters['id'])),
-      );
-    }),
-    GetPage(name: item, page: () {
-      if(Get.parameters['data'] == 'null') {
-        return AddNameScreen(item: null);
-      }
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
-      return AddNameScreen(item: _data);
-    }),
-    GetPage(name: addItem, page: () {
-      List<Translation> _translations = [];
-      jsonDecode(utf8.decode(base64Decode(Get.parameters['translations'].replaceAll(' ', '+')))).forEach((data) {
-        _translations.add(Translation.fromJson(data));
-      });
-      if(Get.parameters['data'] == 'null') {
-        return AddItemScreen(item: null, translations: _translations);
-      }
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
-      return AddItemScreen(item: _data, translations: _translations);
-    }),
+    GetPage(
+        name: campaignDetails,
+        page: () {
+          return Get.arguments != null
+              ? Get.arguments
+              : CampaignDetailsScreen(
+                  campaignModel:
+                      CampaignModel(id: int.parse(Get.parameters['id'])),
+                );
+        }),
+    GetPage(
+        name: item,
+        page: () {
+          if (Get.parameters['data'] == 'null') {
+            return AddNameScreen(item: null);
+          }
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
+          return AddNameScreen(item: _data);
+        }),
+    GetPage(
+        name: addItem,
+        page: () {
+          List<Translation> _translations = [];
+          jsonDecode(utf8.decode(base64Decode(
+                  Get.parameters['translations'].replaceAll(' ', '+'))))
+              .forEach((data) {
+            _translations.add(Translation.fromJson(data));
+          });
+          if (Get.parameters['data'] == 'null') {
+            return AddItemScreen(item: null, translations: _translations);
+          }
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
+          return AddItemScreen(item: _data, translations: _translations);
+        }),
     GetPage(name: categories, page: () => CategoryScreen(categoryModel: null)),
-    GetPage(name: subCategories, page: () {
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      CategoryModel _data = CategoryModel.fromJson(jsonDecode(utf8.decode(_decode)));
-      return CategoryScreen(categoryModel: _data);
-    }),
-    GetPage(name: storeSettings, page: () {
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      Store _data = Store.fromJson(jsonDecode(utf8.decode(_decode)));
-      return StoreSettingsScreen(store: _data);
-    }),
+    GetPage(
+        name: subCategories,
+        page: () {
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          CategoryModel _data =
+              CategoryModel.fromJson(jsonDecode(utf8.decode(_decode)));
+          return CategoryScreen(categoryModel: _data);
+        }),
+    GetPage(
+        name: storeSettings,
+        page: () {
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          Store _data = Store.fromJson(jsonDecode(utf8.decode(_decode)));
+          return StoreSettingsScreen(store: _data);
+        }),
     GetPage(name: addons, page: () => AddonScreen()),
-    GetPage(name: itemDetails, page: () {
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
-      return ItemDetailsScreen(item: _data);
-    }),
+    GetPage(
+        name: itemDetails,
+        page: () {
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          Item _data = Item.fromJson(jsonDecode(utf8.decode(_decode)));
+          return ItemDetailsScreen(item: _data);
+        }),
     GetPage(name: pos, page: () => PosScreen()),
     GetPage(name: deliveryMan, page: () => DeliveryManScreen()),
-    GetPage(name: addDeliveryMan, page: () {
-      if(Get.parameters['data'] == 'null') {
-        return AddDeliveryManScreen(deliveryMan: null);
-      }
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      DeliveryManModel _data = DeliveryManModel.fromJson(jsonDecode(utf8.decode(_decode)));
-      return AddDeliveryManScreen(deliveryMan: _data);
-    }),
-    GetPage(name: deliveryManDetails, page: () {
-      List<int> _decode = base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
-      DeliveryManModel _data = DeliveryManModel.fromJson(jsonDecode(utf8.decode(_decode)));
-      return DeliveryManDetailsScreen(deliveryMan: _data);
-    }),
+    GetPage(
+        name: addDeliveryMan,
+        page: () {
+          if (Get.parameters['data'] == 'null') {
+            return AddDeliveryManScreen(deliveryMan: null);
+          }
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          DeliveryManModel _data =
+              DeliveryManModel.fromJson(jsonDecode(utf8.decode(_decode)));
+          return AddDeliveryManScreen(deliveryMan: _data);
+        }),
+    GetPage(
+        name: deliveryManDetails,
+        page: () {
+          List<int> _decode =
+              base64Decode(Get.parameters['data'].replaceAll(' ', '+'));
+          DeliveryManModel _data =
+              DeliveryManModel.fromJson(jsonDecode(utf8.decode(_decode)));
+          int index = int.parse(Get.parameters['index']);
+          return DeliveryManDetailsScreen(deliveryMan: _data, index: index);
+        }),
     GetPage(name: terms, page: () => HtmlViewerScreen(isPrivacyPolicy: false)),
     GetPage(name: privacy, page: () => HtmlViewerScreen(isPrivacyPolicy: true)),
-    GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
-    GetPage(name: itemImages, page: () => ImageViewerScreen(
-      item: Item.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['item'].replaceAll(' ', '+'))))),
-    )),
-    GetPage(name: chatScreen, page: () {
-      NotificationBody _notificationBody;
-      if(Get.parameters['notification_body'] != 'null') {
-        _notificationBody = NotificationBody.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['notification_body'].replaceAll(' ', '+')))));
-      }
-      User _user;
-      if(Get.parameters['user'] != 'null') {
-        _user = User.fromJson(jsonDecode(utf8.decode(base64Url.decode(Get.parameters['user'].replaceAll(' ', '+')))));
-      }
-      return ChatScreen(
-        notificationBody : _notificationBody, user: _user, fromNotification: Get.parameters['from'] == 'true',
-        conversationId: Get.parameters['conversation_id'] != null && Get.parameters['conversation_id'] != 'null' ? int.parse(Get.parameters['conversation_id']) : null,
-      );
-    }),
+    GetPage(
+        name: update,
+        page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
+    GetPage(
+        name: itemImages,
+        page: () => ImageViewerScreen(
+              item: Item.fromJson(jsonDecode(utf8.decode(base64Url
+                  .decode(Get.parameters['item'].replaceAll(' ', '+'))))),
+            )),
+    GetPage(
+        name: chatScreen,
+        page: () {
+          NotificationBody _notificationBody;
+          if (Get.parameters['notification_body'] != 'null') {
+            _notificationBody = NotificationBody.fromJson(jsonDecode(
+                utf8.decode(base64Url.decode(Get.parameters['notification_body']
+                    .replaceAll(' ', '+')))));
+          }
+          User _user;
+          if (Get.parameters['user'] != 'null') {
+            _user = User.fromJson(jsonDecode(utf8.decode(base64Url
+                .decode(Get.parameters['user'].replaceAll(' ', '+')))));
+          }
+          return ChatScreen(
+            notificationBody: _notificationBody,
+            user: _user,
+            fromNotification: Get.parameters['from'] == 'true',
+            conversationId: Get.parameters['conversation_id'] != null &&
+                    Get.parameters['conversation_id'] != 'null'
+                ? int.parse(Get.parameters['conversation_id'])
+                : null,
+          );
+        }),
     GetPage(name: conversationListScreen, page: () => ConversationScreen()),
-    GetPage(name: restaurantRegistration, page: () => StoreRegistrationScreen()),
+    GetPage(
+        name: restaurantRegistration, page: () => StoreRegistrationScreen()),
     GetPage(name: coupon, page: () => CouponScreen()),
     GetPage(name: expense, page: () => ExpenseScreen()),
   ];
